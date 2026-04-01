@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sabyasachi Dash</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --surface: #f8fafc;
+      --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, serif;
+      background-color: #ffffff;
+      background-image:
+        linear-gradient(rgba(100, 116, 139, 0) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(100, 116, 139, 0.0) 1px, transparent 1px);
+      background-size: 8px 8px;
+      color: #0f172a;
+      line-height: 1.45;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 240px;
+      padding: 40px 24px;
+      box-sizing: border-box;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      border-right: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar .brand {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 28px;
+      line-height: 1.2;
+    }
+
+    .sidebar nav a {
+      display: block;
+      margin-bottom: 14px;
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 15px;
+    }
+
+    .sidebar nav a:hover {
+      color: var(--accent);
+    }
+
+    .main-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .content-wrap {
+      max-width: 950px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.4fr 0.6fr;
+      gap: 24px;
+      align-items: center;
+      padding: 50px 0 30px;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .hero img {
+      width: 220px;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid var(--border);
+      display: block;
+      margin-left: auto;
+    }
+
+    section {
+      padding: 24px 0;
+    }
+
+    .section-title {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .card {
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+    }
+
+    /* Contact buttons updated to match the reference style */
+    .contact-icons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+
+    .btn {
+      --btn-accent: var(--accent);
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 12.5px;
+      padding: 6px 12px;
+      border: 1px solid transparent;
+      border-radius: 9999px;
+      color: var(--text);
+      text-decoration: none;
+      background:
+        linear-gradient(var(--bg), var(--bg)) padding-box,
+        conic-gradient(from 180deg at 50% 50%,
+          color-mix(in srgb, var(--btn-accent) 28%, transparent),
+          transparent 25%,
+          color-mix(in srgb, var(--btn-accent) 12%, transparent)) border-box;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+      transition: transform .06s ease, box-shadow .2s ease, color .2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+      color: var(--accent);
+    }
+
+    .btn .icon {
+      width: 14px;
+      height: 14px;
+      display: inline-grid;
+      place-items: center;
+      transition: transform .2s ease;
+    }
+
+    .btn:hover .icon {
+      transform: translateY(-1px);
+    }
+
+    .btn .icon svg {
+      width: 14px;
+      height: 14px;
+      display: block;
+    }
+
+    .btn.scholar {
+      --btn-accent: #1a73e8;
+    }
+
+    .btn.linkedin {
+      --btn-accent: #0a66c2;
+    }
+
+    .btn.email {
+      --btn-accent: #2563eb;
+    }
+
+    .research-item {
+      margin-bottom: 36px;
+    }
+
+    .research-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .research-image img {
+      width: 100%;
+      max-width: 220px;
+      border-radius: 10px;
+      display: block;
+      object-fit: cover;
+    }
+
+    .research-text h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      font-size: 22px;
+    }
+
+    .research-text p {
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: var(--text);
+      font-size: 17px;
+    }
+
+    .research-text ul {
+      margin-top: 8px;
+      padding-left: 20px;
+    }
+
+    .research-text li {
+      margin-bottom: 4px;
+    }
+
+    .research-text a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .research-text a:hover {
+      text-decoration: underline;
+    }
+
+    .news-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .news-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .news-list li:last-child {
+      border-bottom: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 0;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      margin-top: 30px;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 20px 24px;
+      }
+
+      .sidebar nav a {
+        display: inline-block;
+        margin-right: 16px;
+        margin-bottom: 8px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero img {
+        margin: 0 auto;
+      }
+
+      .research-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .research-image img {
+        max-width: 100%;
+      }
+
+      .contact-icons {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">Sabyasachi Dash</div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#research">Research</a>
+        <a href="#news">News</a>
+      </nav>
+    </aside>
+
+    <div class="main-content">
+      <div class="content-wrap">
+        <main>
+          <section class="hero">
+            <div>
+              <h1>Sabyasachi Dash</h1>
+              <p>Ph.D. Student | Soft & Continuum Robotics | Shape Morphing Metamaterials | Design Space Exploration </p>
+
+              <div class="contact-icons">
+                <a class="btn email" href="mailto:dash8@illinois.edu" title="Email">
+                  <span class="icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="5" width="18" height="14" rx="2" />
+                      <path d="m3 7 9 6 9-6" />
+                    </svg>
+                  </span>
+                  Email
+                </a>
+
+                <a class="btn scholar" href="https://scholar.google.com/citations?user=avwlDxwAAAAJ&hl=en" target="_blank" title="Google Scholar">
+                  <span class="icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M22 10 12 5 2 10l10 5 10-5Z" />
+                      <path d="M6 12v4.5c0 1.6 3.6 2.8 6 2.8s6-1.2 6-2.8V12" />
+                    </svg>
+                  </span>
+                  Scholar
+                </a>
+
+                <a class="btn linkedin" href="https://www.linkedin.com/in/sabyasachidash21" target="_blank" title="LinkedIn">
+                  <span class="icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <rect x="2" y="2" width="20" height="20" rx="4.5" fill="currentColor" />
+                      <path fill="#fff" d="M7.2 9.6H9.6V18H7.2zM8.4 6.4a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8zM10.8 9.6h2.3v1.2h.03c.32-.6 1.16-1.32 2.48-1.32 2.65 0 3.14 1.74 3.14 4v4.5h-2.4v-4c0-1-.02-2.28-1.39-2.28-1.39 0-1.6 1.06-1.6 2.2V18h-2.56z" />
+                    </svg>
+                  </span>
+                  LinkedIn
+                </a>
+              </div>
+            </div>
+
+            <div>
+              <img src="images/photo.jpg" alt="Portrait of Sabyasachi Dash">
+            </div>
+          </section>
+
+          <section id="about">
+            <div class="section-title">About</div>
+            <div class="card">
+              <p>
+                I am a Ph.D. student at the University of Illinois Urbana-Champaign, advised by Prof. Girish Krishnan.
+                I primarily work with soft and continuum robots, metamaterials, and soft matter.
+              </p>
+            </div>
+          </section>
+
+          <section id="research">
+            <div class="section-title">Research</div>
+
+            <div class="research-item">
+              <div class="research-grid">
+                <div class="research-image">
+                  <img src="images/softrobot.png" alt="Soft robotics research">
+                </div>
+                <div class="research-text">
+                  <h3>Reconfigurable Tendon Driven Continuum Manipulators</h3>
+                  <p>
+                    Tendon-driven continuum manipulators capable of changing tendon routing during operation.
+                    Each spacer disk can rotate around the backbone axis, changing tendon routing locally. 
+                    
+                
+                  </p>
+                  <p>
+                    The actuation space is studied by projecting the spatial profile into the Frenet-Serret
+                    curvature-torsion frame, yielding qualitative insights that can support a simplified inverse model.
+                  </p>
+                  <strong>Publications:</strong>
+                  <ul>
+                    <li>
+                      <a href="" target="_blank">
+                        Actuation Space Reduction to Facilitate Insightful Shape Matching in a Novel Reconfigurable Tendon Driven Continuum Manipulator
+                      </a>
+                      <p>
+                      - Accepted for publication in IEEE RoboSoft 2026.
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="research-item">
+              <div class="research-grid">
+                <div class="research-image">
+                  <img src="images/metamaterial.png" alt="Programmable metamaterials research">
+                </div>
+                <div class="research-text">
+                  <h3>Design Space Exploration for Shape Morphing Metamaterials</h3>
+                  <p>
+                    Inverse design of shape morphing structures with embedded actuation is a complicated problem, with challenges like proliferation of 
+                    multiple spurious modes, and difficulty in finidng unique optimal solution. To address this, it is crucial to have an in-depth 
+                    understanding of the design space under consideration. We developed an enumeration based design space exploration framework, which 
+                    enumerates important deformed configurations for asymmetric triangular unit meshed mechanisms, following pennate muscle based bio inspired
+                    heuristics.
+                  </p>
+                  <strong>Publications:</strong>
+                  <ul>
+                    <li><a href="https://asmedigitalcollection.asme.org/mechanicaldesign/article/147/12/121702/1215541/Design-Space-Enumeration-for-Shape-Changing" target="_blank">Design Space Enumeration 
+                        for Shape-Changing Structures Using a Bioinspired Heuristic</a></li>
+                    <p>
+                       ASME Journal of Mechanical Design, 2025
+                    </p>
+                    <li><a href="https://ieeexplore.ieee.org/abstract/document/10617572" target="_blank">Enumerating Deformed Configurations of Reconfigurable Meshed Cellular Robots</a></li>
+                    <p>
+                        IEEE International Conference on Reconfigurable Mechanisms and Robots (ReMAR)
+                    </p>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="news">
+            <div class="section-title">News</div>
+            <div class="card">
+              <ul class="news-list">
+                <li><strong>Apr 2026:</strong> Traveling to Kanazawa, Japan to present at IEEE RoboSoft 2026.</li>
+                <li><strong>Jan 2026:</strong> Paper accepted at IEEE RoboSoft 2026.</li>
+                <li><strong>May 2025:</strong> Paper accepted in the ASME Journal of Mechanical Design (JMD).</li>
+                <li><strong>May 2024:</strong> Attended IEEE ReMaR 2024 at Chicago, Illinois.</li>
+                <li><strong>Jan 2024:</strong> Paper accepted in IEEE ReMaR 2024.</li>
+                <li><strong>Sep 2023:</strong> Started my PhD at UIUC.</li>
+              </ul>
+            </div>
+          </section>
+        </main>
+
+        <footer>
+          © 2026 Sabyasachi Dash
+        </footer>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
