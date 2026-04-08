@@ -22,7 +22,8 @@
 
     body {
       margin: 0;
-      font-family: Georgia, serif;
+      /* font-family: Georgia, serif; */
+      font-family: Aptos, "Aptos Display", Calibri, "Segoe UI", Arial, sans-serif;
       background-color: #ffffff;
       background-image:
         linear-gradient(rgba(100, 116, 139, 0) 1px, transparent 1px),
@@ -254,13 +255,34 @@
       margin: 0;
     }
 
+    #news .card {
+      max-height: 120px;   /* adjust as needed */
+      overflow-y: auto;
+      padding-right: 6px;  /* space for scrollbar */
+    }
+
     .news-list li {
-      padding: 10px 0;
+      padding: 6px 0;      /* reduced from 10px */
       border-bottom: 1px solid var(--border);
+      line-height: 1.35;   /* slightly tighter */
     }
 
     .news-list li:last-child {
       border-bottom: none;
+    }
+
+    /* optional scrollbar styling */
+    #news .card::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    #news .card::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 999px;
+    }
+
+    #news .card::-webkit-scrollbar-track {
+      background: transparent;
     }
 
     footer {
